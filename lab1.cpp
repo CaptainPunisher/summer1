@@ -97,7 +97,7 @@ int main(void)
 
 	//declare a box shape
 	game.box.width = 100;
-	game.box.height = 10;
+	game.box.height = 100;
 	game.box.center.x = 120 + 5*65;
 	game.box.center.y = 500 - 5*60;
 
@@ -245,6 +245,11 @@ void movement(Game *game)
 	p->s.center.y += p->velocity.y;
 
 	//check for collision with shapes...
+	//bounce up
+	if ((p->s.center.x < 545) && (p->s.center.x > 346) && (p->s.center.y == 210)) {
+		p->s.center.y = p->velocity.y * -1;
+	}
+	
 	//Shape *s;
 
 	//check for off-screen
