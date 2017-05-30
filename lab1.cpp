@@ -97,7 +97,7 @@ int main(void)
 
 	//declare a box shape
 	game.box.width = 100;
-	game.box.height = 100;
+	game.box.height = 10;
 	game.box.center.x = 120 + 5*65;
 	game.box.center.y = 500 - 5*60;
 
@@ -246,14 +246,19 @@ void movement(Game *game)
 
 	//check for collision with shapes...
 	//bounce up
+	/*
 	if ((p->s.center.x < 545) && (p->s.center.x > 346) && (p->s.center.y == 210)) {
 		p->s.center.y = p->velocity.y * -1;
 	}
+	*/
 	
-	//Shape *s;
+	Shape *s = &game->box;
+	if (p->s.center.y < s->center.y + s->height && p->s.center.x < s->center.x + s->width && p->s.center.x > s->center.x - s->width) {
+		p->velocity.y = -p->velocity.y;
+	}
 
 	//check for off-screen
-	if (p->s.center.y < 0.0) {
+	if (p->s.center.y < 0.0 || p->s.center.y > WINDOW_HEIGHT) {
 		std::cout << "off screen" << std::endl;
 		game->n = 0;
 	}
@@ -267,7 +272,7 @@ void render(Game *game)
 
 	//draw box
 	Shape *s;
-	glColor3ub(90,140,90);
+	glColor3ub(0xFF,0,0);
 	s = &game->box;
 	glPushMatrix();
 	glTranslatef(s->center.x, s->center.y, s->center.z);
